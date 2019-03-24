@@ -1,40 +1,52 @@
 import React, { useState } from 'react';
-import hexToRgb from './components/utility/hexToRgb';
 
 import './assets/css/App.css';
 import './assets/css/bootstrap.min.css';
+import Color from './components/color/color'
+import Range from './components/range/range'
+import Dimension from './components/dimension/dimension'
 
 const app = () => {
 
-  const [color, setColor] = useState('#e66465')
+  const submitHandler = (e) => {
+    const divParams = {
+      bg: e.target.elements.bg.value,
+      border: e.target.elements.border.value/10,
+      height: e.target.elements.height.value,
+      width: e.target.elements.width.value,
+    }
+    const div = document.createElement('div');
+
+    div.style.backgroundColor = divParams.bg;
+    div.style.borderWidth = `${divParams.border}px`;
+    div.style.height = `${divParams.height}px`;
+    div.style.width = `${divParams.width}px`;
+    div.textContent = `${divParams.height} X ${divParams.width}`
+    div.classList.add('divs')
+
+    document.querySelector("#test").appendChild(div);
+    console.log('div', div)
+    e.preventDefault();
+  }
 
   return (
     <div className="container">
       <div className="row">
         <div className="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
-          <form>
+          <form onSubmit={submitHandler}>
+
+            <Color />
+            <Range />
+            <Dimension />
 
             <div className="form-group row">
-              <div className="col-sm-10">
-                <input type="color" id="color" name="head" value="#e66465" onChange={(e) => setColor(hexToRgb(e.target.value))} />
-                <label for="color" className="col-sm-2 col-form-label">{color}</label>
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <label for="inputPassword3" className="col-sm-2 col-form-label">Password</label>
-              <div className="col-sm-10">
-                <input type="password" className="form-control" id="inputPassword3" placeholder="Password" />
-              </div>
-            </div>
-
-            <div className="form-group row">
-              <div className="offset-sm-2 col-sm-10">
+              <div className="col-sm-12 col-sm-12 col-sm-12">
                 <button type="submit" className="btn btn-primary">Submit</button>
               </div>
             </div>
 
           </form>
+          <div id="test"></div>
         </div>
       </div>
     </div>
