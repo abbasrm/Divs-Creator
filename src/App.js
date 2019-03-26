@@ -14,18 +14,20 @@ const app = () => {
       border: e.target.elements.border.value/10,
       height: e.target.elements.height.value,
       width: e.target.elements.width.value,
+      borderColor: e.target.elements.borderColor.value,
+      borderType: e.target.elements.borderType.value
     }
     const div = document.createElement('div');
 
     div.style.backgroundColor = divParams.bg;
-    div.style.borderWidth = `${divParams.border}px`;
+    div.style.border = `${divParams.border}px ${divParams.borderType} ${String(divParams.borderColor)}`;
     div.style.height = `${divParams.height}px`;
     div.style.width = `${divParams.width}px`;
     div.textContent = `${divParams.height} X ${divParams.width}`
     div.classList.add('divs')
 
     document.querySelector("#test").appendChild(div);
-    console.log('div', div)
+    console.log('div', `${divParams.border}px ${divParams.borderType} ${divParams.borderColor}`)
     e.preventDefault();
   }
 
@@ -46,9 +48,15 @@ const app = () => {
             </div>
 
           </form>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-lg-12 col-md-12 col-sm-12">
           <div id="test"></div>
         </div>
       </div>
+
     </div>
   );
 }

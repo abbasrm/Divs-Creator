@@ -29,7 +29,7 @@ time, mark, audio, video {
 /* color picker styles */
 input[type="color"],label#label-{
   display: block;
-  width: 150px;
+  width: 250px;
   float: left;
   top: 0;
   left: 0;
@@ -44,12 +44,17 @@ label#label{
 }
 
 div.divs{
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-color: #000;
-  border-style: solid;
   color: #333333;
+  margin: 5px;
+}
+
+div#test{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* Range input styles */
