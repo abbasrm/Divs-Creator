@@ -8,19 +8,20 @@ import Dimension from './components/dimension/dimension'
 import axios from './components/axios/axios';
 import contrast from './components/utility/contrast';
 
+const initialDivParams = {
+  range: 30,
+  borderColor: '#983132',
+  type: 'solid',
+  radius: 10,
+  width: 200,
+  height: 100,
+  color: '#e66465'
+}
+
 const app = () => {
 
   const [divs, setDivs] = useState([]);
-
-  const [ range, setRange ] = useState(30);
-  const [ borderColor, setBorderColor ] = useState('#983132');
-  const [ type, setType ] = useState('solid');
-  const [ radius, setRadius ] = useState('10');
-  
-  const [ width, setWidth] = useState(175);
-  const [ height, setHeight ] = useState(100);
-
-  const [color, setColor] = useState('#e66465');
+  const [divParams, setDivParams] = useState(initialDivParams);
 
   useEffect(() => {
     axios.get('/divs.json').then(data => {
@@ -82,13 +83,7 @@ const app = () => {
         ]
         setDivs(newDivs);
         // Initial state
-        setRange(30);
-        setBorderColor('#983132');
-        setType('solid');
-        setRadius('10');
-        setWidth(175);
-        setHeight(100);
-        setColor('#e66465');
+        setDivParams(initialDivParams)
       });
     } catch{
       console.error('error')
@@ -99,13 +94,23 @@ const app = () => {
   const deleteDiv = (id) => {
     if (window.confirm("Are you sure to delete?")) {
       axios.delete(`/divs/${id}.json`)
-      .then(res => {
-        const newDivs = divs.filter(d => d.id !== id)
-        setDivs(newDivs)
-      })
-      .catch(err => console.log(err));
+        .then(res => {
+          const newDivs = divs.filter(d => d.id !== id)
+          setDivs(newDivs)
+        })
+        .catch(err => console.log(err));
     }
   }
+
+  const onChangeHandler = (e, target) => {
+    const newParams = {
+        ...divParams,
+        [target]: e.target.value
+    }
+    setDivParams(newParams)
+}
+
+  const { range, borderColor, type, radius, width, height, color } = divParams;
 
   return (
     <div className="container">
@@ -113,26 +118,13 @@ const app = () => {
         <div className="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
           <form onSubmit={submitHandler}>
 
-            <Color
-            color={color} 
-            setColor={setColor}
-            />
-            <Border range={range}
-            setRange={setRange}
-            borderColor={borderColor} 
-            setBorderColor={setBorderColor}
-            type={type}
-            setType={setType}
-            radius={radius}
-            setRadius={setRadius}/>
-            <Dimension width={width}
-            setWidth={setWidth}
-            height={height}
-            setHeight={setHeight}/>
+            <Color divParams={divParams} onChangeHandler={onChangeHandler} />
+            <Border divParams={divParams} onChangeHandler={onChangeHandler} />
+            <Dimension divParams={divParams} onChangeHandler={onChangeHandler} />
 
             <div className="form-group row">
               <div className="col-sm-12 col-sm-12 col-sm-12">
-                <button type="submit" className="btn btn-primary">Save</button>
+                <button type="submit" className="btn btn-primary d-block mx-auto">Save</button>
               </div>
             </div>
 
@@ -142,27 +134,30 @@ const app = () => {
 
       <div className="row">
         <div className="col-lg-12 col-md-12 col-sm-12">
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <h5>Live preview</h5>
-        <div className="divs" style={{backgroundColor: color, border: `${range/10}px ${type} ${String(borderColor)}`, height: +height, width: +width, borderRadius: `${radius}%`}}>
-              <strong><span style={{ color: contrast(color)}}>{height} X {width}</span></strong>
+
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <h5>Live preview</h5>
+            <div className="divs" style={{ backgroundColor: color, border: `${range / 10}px ${type} ${String(borderColor)}`, height: +height, width: +width, borderRadius: `${radius}%` }}>
+              <strong><span style={{ color: contrast(color) }}>{height} X {width}</span></strong>
               <i className="close"></i>
             </div>
-        </div>
-        
+          </div>
+
 
           {/* First way, with uncommenting useEffect hook */}
           {/* <div id="test"></div> */}
-          
+
           <hr />
+
           {/* Second way */}
           <h5>Gallery</h5>
           <div id="test">
-            {divs.map(d => <div key={d.id} className="divs" style={{backgroundColor: d.bg, border: `${d.border}px ${d.borderType} ${String(d.borderColor)}`, height: +d.height, width: +d.width, borderRadius: `${d.raduis}%`}}>
-              <strong><span style={{ color: d.color}}>{d.height} X {d.width}</span></strong>
+            {divs.map(d => <div key={d.id} className="divs" style={{ backgroundColor: d.bg, border: `${d.border}px ${d.borderType} ${String(d.borderColor)}`, height: +d.height, width: +d.width, borderRadius: `${d.raduis}%` }}>
+              <strong><span style={{ color: d.color }}>{d.height} X {d.width}</span></strong>
               <i onClick={() => deleteDiv(d.id)} className="close"></i>
-              </div>)}
+            </div>)}
           </div>
+          <br/>
 
         </div>
       </div>

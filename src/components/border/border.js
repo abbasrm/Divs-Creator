@@ -1,16 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const range = (props) => {
-
-    // const [ range, setRange ] = useState(30);
-    // const [ color, setColor ] = useState('#983132');
-    // const [ type, setType ] = useState('solid');
-    // const [ radius, setRadius ] = useState('10');
-
-    // useEffect(() => {
-    //     setColor('#983132')
-    // }, []);
-
     return (
         <>
             <div className="form-group row">
@@ -20,13 +10,13 @@ const range = (props) => {
                     <input
                         type="range"
                         name="border"
-                        value={props.range}
+                        value={props.divParams.range}
                         id="range"
                         min="10"
                         max="50"
                         step="10"
-                        onChange={(e) => props.setRange(e.target.value)} />
-                    <label forhtml="range" id="label" className="col-sm-2 col-form-label" style={{ paddingTop: 12 }}>{props.range / 10}</label>
+                        onChange={(e) => props.onChangeHandler(e, 'range')} />
+                    <label forhtml="range" id="label" className="col-sm-2 col-form-label" style={{ paddingTop: 12 }}>{props.divParams.range / 10}</label>
 
                 </div>
                 <div className="col-sm-3 center-items">
@@ -34,9 +24,9 @@ const range = (props) => {
                         type="color"
                         id="borderColor"
                         name="borderColor"
-                        value={props.borderColor}
+                        value={props.divParams.borderColor}
                         style={{ width: 40 }}
-                        onChange={e => props.setBorderColor(e.target.value)} />
+                        onChange={e => props.onChangeHandler(e, 'borderColor')} />
                 </div>
 
             </div>
@@ -46,17 +36,17 @@ const range = (props) => {
                     <input
                         type="range"
                         name="raduis"
-                        value={props.radius}
+                        value={props.divParams.radius}
                         id="raduis"
                         min="0"
                         max="20"
-                        onChange={(e) => props.setRadius(e.target.value)} />
+                        onChange={(e) => props.onChangeHandler(e, 'radius')} />
 
-                    <label forhtml="raduis" id="label" className="col-sm-2 col-form-label" style={{ paddingTop: 12 }}>{props.radius} %</label>
+                    <label forhtml="raduis" id="label" className="col-sm-2 col-form-label" style={{ paddingTop: 12 }}>{props.divParams.radius} %</label>
 
                 </div>
                 <div className="col-sm-3 center-items">
-                    <select onChange={e => props.setType(e.target.value)} name="borderType" id="borderType" value={props.type}>
+                    <select onChange={e => props.onChangeHandler(e, 'type')} name="borderType" id="borderType" value={props.divParams.type}>
                         <option value="solid">Solid</option>
                         <option value="dotted">Dotted</option>
                         <option value="dashed">Dashed</option>
