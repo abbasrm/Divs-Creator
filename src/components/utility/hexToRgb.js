@@ -4,5 +4,5 @@ export default (hex) => {
     hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
 
     const result = exe.exec(hex);
-    return result ? `rgb(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)})` : null;
+    return result ? [`rgb(${parseInt(result[1], 16)},${parseInt(result[2], 16)},${parseInt(result[3], 16)})`, [parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16)]] : null;
   }

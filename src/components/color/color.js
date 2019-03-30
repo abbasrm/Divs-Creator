@@ -24,7 +24,7 @@ const color = () => {
                     name="bg"
                     value={color}
                     onChange={onColorChange} />
-                <label forhtml="colorpicker" id="label" className="col-sm-2 col-form-label">{hexToRgb(color)}</label>
+                <label forhtml="colorpicker" id="label" className="col-sm-2 col-form-label">{hexToRgb(color)[0]}</label>
 
             </div>
         </div>

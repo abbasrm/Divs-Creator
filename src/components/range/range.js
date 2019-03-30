@@ -40,7 +40,11 @@ const range = () => {
                 <select onChange={e => setType(e.target.value)} name="borderType" id="borderType" value={type}>
                     <option value="solid">Solid</option>
                     <option value="dotted">Dotted</option>
-                    <option value="dash">Dash</option>
+                    <option value="dashed">Dashed</option>
+                    <option value="double">Double</option>
+                    <option value="groove">Groove</option>
+                    <option value="ridge">Ridge</option>
+                    <option value="inset">Inset</option>
                 </select>
             </div>
         </div>

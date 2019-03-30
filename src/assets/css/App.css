@@ -141,4 +141,42 @@ input[type="range"]::-ms-tooltip {
   display: none;
 }
 
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 24px;
+  height: 24px;
+  opacity: 0.45;
+  background: #eee;
+  border-radius: 50% 50%;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 10px;
+  top: 4px;
+  content: ' ';
+  height: 16px;
+  width: 4px;
+  background-color: #ff0011;
+  transform: rotate(90deg);
+  transition: 0.3s all ease-in-out;
+}
+.close:hover:before, .close:hover:after{
+  width: 2px;
+  height: 18px;
+  left: 11px;
+  top: 3px;
+  content: ' ';
+} 
+.close:hover:before {
+  transform: rotate(45deg);
+}
+.close:hover:after {
+  transform: rotate(-45deg);
+}
 
