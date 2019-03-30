@@ -2,16 +2,12 @@ import React, { useState, useEffect } from 'react';
 import hexToRgb from '../utility/hexToRgb';
 
 
-const color = () => {
+const color = (props) => {
 
-    const [color, setColor] = useState('#e66465');
-
-    useEffect(() => {
-        setColor('#e66465')
-    }, []);
+    // const [color, setColor] = useState('#e66465');
 
     const onColorChange = (e) => {
-        setColor(e.target.value)
+        props.setColor(e.target.value)
     }
 
     return (
@@ -22,9 +18,9 @@ const color = () => {
                     type="color"
                     id="colorpicker"
                     name="bg"
-                    value={color}
+                    value={props.color}
                     onChange={onColorChange} />
-                <label forhtml="colorpicker" id="label" className="col-sm-2 col-form-label">{hexToRgb(color)[0]}</label>
+                <label forhtml="colorpicker" id="label" className="col-sm-2 col-form-label">{hexToRgb(props.color)[0]}</label>
 
             </div>
         </div>

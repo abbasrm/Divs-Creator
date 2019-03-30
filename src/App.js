@@ -12,9 +12,18 @@ const app = () => {
 
   const [divs, setDivs] = useState([]);
 
+  const [ range, setRange ] = useState(30);
+  const [ borderColor, setBorderColor ] = useState('#983132');
+  const [ type, setType ] = useState('solid');
+  const [ radius, setRadius ] = useState('10');
+  
+  const [ width, setWidth] = useState(175);
+  const [ height, setHeight ] = useState(100);
+
+  const [color, setColor] = useState('#e66465');
+
   useEffect(() => {
     axios.get('/divs.json').then(data => {
-      // console.log('divs', data.data);
       const divsArr = [];
       for (let key in data.data) {
         const item = {
@@ -71,7 +80,15 @@ const app = () => {
             ...divParams,
           }
         ]
-        setDivs(newDivs)
+        setDivs(newDivs);
+        // Initial state
+        setRange(30);
+        setBorderColor('#983132');
+        setType('solid');
+        setRadius('10');
+        setWidth(175);
+        setHeight(100);
+        setColor('#e66465');
       });
     } catch{
       console.error('error')
@@ -96,9 +113,22 @@ const app = () => {
         <div className="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
           <form onSubmit={submitHandler}>
 
-            <Color />
-            <Border />
-            <Dimension />
+            <Color
+            color={color} 
+            setColor={setColor}
+            />
+            <Border range={range}
+            setRange={setRange}
+            borderColor={borderColor} 
+            setBorderColor={setBorderColor}
+            type={type}
+            setType={setType}
+            radius={radius}
+            setRadius={setRadius}/>
+            <Dimension width={width}
+            setWidth={setWidth}
+            height={height}
+            setHeight={setHeight}/>
 
             <div className="form-group row">
               <div className="col-sm-12 col-sm-12 col-sm-12">
@@ -112,13 +142,21 @@ const app = () => {
 
       <div className="row">
         <div className="col-lg-12 col-md-12 col-sm-12">
-
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+          <h5>Live preview</h5>
+        <div className="divs" style={{backgroundColor: color, border: `${range/10}px ${type} ${String(borderColor)}`, height: +height, width: +width, borderRadius: `${radius}%`}}>
+              <strong><span style={{ color: contrast(color)}}>{height} X {width}</span></strong>
+              <i className="close"></i>
+            </div>
+        </div>
+        
 
           {/* First way, with uncommenting useEffect hook */}
           {/* <div id="test"></div> */}
-
-
+          
+          <hr />
           {/* Second way */}
+          <h5>Gallery</h5>
           <div id="test">
             {divs.map(d => <div key={d.id} className="divs" style={{backgroundColor: d.bg, border: `${d.border}px ${d.borderType} ${String(d.borderColor)}`, height: +d.height, width: +d.width, borderRadius: `${d.raduis}%`}}>
               <strong><span style={{ color: d.color}}>{d.height} X {d.width}</span></strong>
