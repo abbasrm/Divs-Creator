@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import './assets/css/App.css';
 import './assets/css/bootstrap.min.css';
-import Color from './components/color/color'
-import Range from './components/range/range'
+import Color from './components/color/color';
+import Border from './components/border/border';
 import Dimension from './components/dimension/dimension'
 import axios from './components/axios/axios';
 import contrast from './components/utility/contrast';
@@ -52,7 +52,6 @@ const app = () => {
 
 
   const submitHandler = (e) => {
-
     const divParams = {
       bg: e.target.elements.bg.value,
       color: contrast(e.target.elements.bg.value),
@@ -60,7 +59,8 @@ const app = () => {
       height: e.target.elements.height.value,
       width: e.target.elements.width.value,
       borderColor: e.target.elements.borderColor.value,
-      borderType: e.target.elements.borderType.value
+      borderType: e.target.elements.borderType.value,
+      raduis: e.target.elements.raduis.value
     }
     try {
       axios.post('/divs.json', divParams).then(d => {
@@ -97,12 +97,12 @@ const app = () => {
           <form onSubmit={submitHandler}>
 
             <Color />
-            <Range />
+            <Border />
             <Dimension />
 
             <div className="form-group row">
               <div className="col-sm-12 col-sm-12 col-sm-12">
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Save</button>
               </div>
             </div>
 
@@ -120,12 +120,11 @@ const app = () => {
 
           {/* Second way */}
           <div id="test">
-            {divs.map(d => <div key={d.id} className="divs" style={{backgroundColor: d.bg, border: `${d.border}px ${d.borderType} ${String(d.borderColor)}`, height: +d.height, width: +d.width}}>
+            {divs.map(d => <div key={d.id} className="divs" style={{backgroundColor: d.bg, border: `${d.border}px ${d.borderType} ${String(d.borderColor)}`, height: +d.height, width: +d.width, borderRadius: `${d.raduis}%`}}>
               <strong><span style={{ color: d.color}}>{d.height} X {d.width}</span></strong>
               <i onClick={() => deleteDiv(d.id)} className="close"></i>
               </div>)}
           </div>
-
 
         </div>
       </div>
